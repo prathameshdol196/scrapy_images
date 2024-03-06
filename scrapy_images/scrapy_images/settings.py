@@ -91,3 +91,12 @@ ROBOTSTXT_OBEY = True
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+# Enable the ImagesPipeline
+ITEM_PIPELINES = {
+    'scrapy_images.pipelines.CustomImagePipeline': 1,
+}
+
+# Specify the directory where images will be stored
+IMAGES_STORE = 'images'
+

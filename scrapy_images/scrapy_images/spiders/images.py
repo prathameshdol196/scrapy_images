@@ -1,4 +1,6 @@
 import csv
+import mysql.connector
+import os
 import scrapy
 
 
@@ -19,18 +21,15 @@ class ImagesSpider(scrapy.Spider):
 
         flags = response.css(".col-md-4")
 
-        with open("data.csv", "a", newline='') as csv_file:
-            # Create a CSV writer object
-            csv_writer = csv.writer(csv_file)
+        for flag in flags:
+            img_url = flag.css("a>img").attrib["src"]
+            name = flag.css("::text").get().strip()
 
-            # Write the header row
-            csv_writer.writerow(["Name", "Image_URL"])
+            yield {
+                'name': f"{name}.jpg",
+                'image_urls': [f"https://www.worldometers.info{img_url}"]
+            }
 
-            for flag in flags:
-                img = flag.css("a>img").attrib["src"]
-                name = flag.css("::text").get()
-
-                csv_writer.writerow([name, f"https://www.worldometers.info{img}"])
 
 
 
